@@ -1,0 +1,17 @@
+﻿/* Aplicar a toda la página */
+html, body {
+    background-color: white;
+    color: black;
+    height: 100%; /* Importante para que toda la página tenga color */
+    margin: 0;
+}
+
+/* Asegurarte de que el contenedor principal también tiene estilo */
+main {
+    background-color: white;
+    padding: 20px;
+}
+
+header, footer {
+    background-color: lightgray;
+}

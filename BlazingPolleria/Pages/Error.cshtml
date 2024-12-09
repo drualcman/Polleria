@@ -1,0 +1,43 @@
+﻿@page
+@model BlazingPizza.Pages.ErrorModel
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Error</title>
+    <link href="~/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/app.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="main">
+        <div class="content px-4">
+            <h1 class="text-danger">Error.</h1>
+            <h2 class="text-danger">Ocurrió un error al procesar su solicitud.</h2>
+
+            @if (Model.ShowRequestId)
+            {
+                <p>
+                    <strong>ID de Solicitud:</strong> <code>@Model.RequestId</code>
+                </p>
+            }
+
+            <h3>Modo de Desarrollo</h3>
+            <p>
+                Cambiar al entorno de <strong>Desarrollo</strong> muestra información detallada sobre el error que ocurrió.
+            </p>
+            <p>
+                <strong>El entorno de Desarrollo no debería estar habilitado para aplicaciones en producción.</strong>
+                Esto puede mostrar información sensible de las excepciones a los usuarios finales.
+                Para depuración local, habilite el entorno de <strong>Desarrollo</strong> configurando la variable de entorno <strong>ASPNETCORE_ENVIRONMENT</strong> a <strong>Development</strong>
+                y reinicie la aplicación.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
+
