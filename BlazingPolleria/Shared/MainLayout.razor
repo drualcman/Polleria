@@ -1,0 +1,57 @@
+@* @inherits LayoutComponentBase
+
+<div class="content">
+    @Body
+</div> *@
+
+@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+@using Microsoft.JSInterop
+
+
+<button class="btn btn-primary" @onclick="ToggleTheme">
+    Cambiar Tema
+</button>
+
+<div id="app">
+
+    <header class="top-bar">
+        <a class="logo" href="">
+            <img src="img/logo.svg" />
+        </a>
+
+        <NavLink href="" class="nav-tab" Match="NavLinkMatch.All">
+            <img src="img/pizza-slice.svg" />
+            <div>Pedir Pizza</div>
+        </NavLink>
+
+        <NavLink href="myorders" class="nav-tab">
+            <img src="img/bike.svg" />
+            <div>Mis Pedidos</div>
+        </NavLink>
+    </header>
+
+    <div class="content">
+        @Body
+    </div>
+
+    <footer>
+        &copy; Blazing Pizza @DateTime.UtcNow.Year
+    </footer>
+
+</div>
+
+
+
+@code {
+    private bool isDarkMode = false;
+
+    private async Task ToggleTheme()
+    {
+        isDarkMode = !isDarkMode;
+        var theme = isDarkMode ? "dark" : "light";
+
+        // Invocar la función de JavaScript
+        await JSRuntime.InvokeVoidAsync("setTheme", theme);
+    }
+}

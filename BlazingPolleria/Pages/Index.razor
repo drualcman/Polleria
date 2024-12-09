@@ -1,0 +1,125 @@
+@page "/"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+@using BlazingPizza.Services
+@inject OrderState OrderState
+@inject IJSRuntime JavaScript
+@inject NavigationManager NavigationManager
+
+<div class="main">
+    <h1>Pizzas Ardientes</h1>
+
+    <!-- Botón personalizado -->
+    <div class="filter-section">
+        <button @onclick="ToggleOrderByPrice" class="custom-button">@buttonText</button>
+    </div>
+
+    <ul class="pizza-cards">
+        @if (specials != null)
+        {
+            @foreach (var special in orderedSpecials)
+            {
+                <li @onclick="@(() => OrderState.ShowConfigurePizzaDialog(special))" style="background-image: url('@special.ImageUrl')">
+                    <div class="pizza-info">
+                        <span class="title">@special.Name</span>
+                        @special.Description
+                        <span class="price">@special.GetFormattedBasePrice()</span>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+@if (OrderState.ShowingConfigureDialog)
+{
+    <ConfigurePizzaDialog Pizza="OrderState.ConfiguringPizza"
+                          OnCancel="OrderState.CancelConfigurePizzaDialog"
+                          OnConfirm="OrderState.ConfirmConfigurePizzaDialog" />
+}
+
+<div class="sidebar">
+    @if (order.Pizzas.Any())
+    {
+        <div class="order-contents">
+            <h2>Su pedido</h2>
+
+            @foreach (var configuredPizza in order.Pizzas)
+            {
+                <div class="cart-item">
+                    <div class="title">@(configuredPizza.Size)" @configuredPizza.Special.Name</div>
+                    <div class="item-price">
+                        @configuredPizza.GetFormattedTotalPrice()
+                    </div>
+                    <button type="button" class="close text-danger" aria-label="Close"
+                            @onclick="@(async () => await RemovePizzaConfirmation(configuredPizza))">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-cart">Elija una pizza<br>para comenzar</div>
+    }
+
+    <div class="order-total @(order.Pizzas.Any() ? "" : "hidden")">
+        Total:
+        <span class="total-price">@order.GetFormattedTotalPrice()</span>
+        <a href="checkout" class="@(OrderState.Order.Pizzas.Count == 0 ? "btn btn-warning disabled" : "btn btn-warning")">
+            Hacer pedido >
+        </a>
+    </div>
+</div>
+
+@code {
+    List<PizzaSpecial> specials = new();
+    List<PizzaSpecial> orderedSpecials = new();
+    bool isAscending = true;
+    string buttonText = "Ordenar de mayor a menor - viceverza";
+    Order order => OrderState.Order;
+
+    protected override async Task OnInitializedAsync()
+    {
+        specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>(NavigationManager.BaseUri + "specials");
+        orderedSpecials = specials.OrderByDescending(special => special.BasePrice).ToList();
+    }
+
+    async Task RemovePizzaConfirmation(Pizza removePizza)
+    {
+        var messageParams = new
+        {
+            title = "¿Eliminar Pizza?",
+            text = $"""¿Quieres eliminar la "{removePizza.Special!.Name}" de tu pedido?""",
+            icon = "warning",
+            buttons = new
+            {
+                abort = new { text = "No, déjalo en mi pedido.", value = false },
+                confirm = new { text = "Si, quitar la pizza", value = true }
+            },
+            dangerMode = true
+        };
+
+        if (await JavaScript.InvokeAsync<bool>("swal", messageParams))
+        {
+            OrderState.RemoveConfiguredPizza(removePizza);
+        }
+    }
+
+    private void ToggleOrderByPrice()
+    {
+        if (isAscending)
+        {
+            orderedSpecials = specials.OrderBy(special => special.BasePrice).ToList();
+            buttonText = "Mostrar desde las más caras";
+        }
+        else
+        {
+            orderedSpecials = specials.OrderByDescending(special => special.BasePrice).ToList();
+            buttonText = "Mostrar desde las más económicas";
+        }
+
+        isAscending = !isAscending;
+    }
+}
