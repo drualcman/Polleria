@@ -1,16 +1,17 @@
-﻿using BlazingPizza.Data;
+﻿using BlazingPolleria.Data;
+using BlazingPolleria.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlazingPizza;
+namespace BlazingPolleria.Controllers;
 
 [Route("orders")]
 [ApiController]
 public class OrdersController : Controller
 {
-    private readonly PizzaStoreContext _db;
+    private readonly PolloStoreContext _db;
 
-    public OrdersController(PizzaStoreContext db)
+    public OrdersController(PolloStoreContext db)
     {
         _db = db;
     }

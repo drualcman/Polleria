@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BlazingPizza
+namespace BlazingPolleria.Model
 {
     public class OrderWithStatus
     {

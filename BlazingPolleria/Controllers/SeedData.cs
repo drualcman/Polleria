@@ -1,75 +1,41 @@
-﻿namespace BlazingPizza.Data;
+﻿using BlazingPolleria.Data;
+using BlazingPolleria.Model;
+
+namespace BlazingPolleria.Controllers;
 
 public static class SeedData
 {
-    public static void Initialize(PizzaStoreContext db)
+    public static void Initialize(PolloStoreContext db)
     {
-        var specials = new PizzaSpecial[]
+        var specials = new PolloSpecial[]
         {
-            new PizzaSpecial()
+            new PolloSpecial()
             {
-                Name = "Pizza Básica de Queso",
-                Description = "Es quesosa y deliciosa. ¿Por qué no querrías una?",
-                BasePrice = 9.99m,
-                ImageUrl = "img/pizzas/cheese.jpg",
+                Name = "Cuarto de pollo",
+                Description = "Crugientito y jugoso",
+                BasePrice = 250.00m,
+                ImageUrl = "img/pollos/cuarto-pollo.jpg",
             },
-            new PizzaSpecial()
+            new PolloSpecial()
             {
-                Id = 2,
-                Name = "El Baconatorizador",
-                Description = "Tiene TODO tipo de tocino",
-                BasePrice = 11.99m,
-                ImageUrl = "img/pizzas/bacon.jpg",
+                Name = "Pollo entero",
+                Description = "Lo mejor de lo mejor. Crugientito y jugoso",
+                BasePrice = 1000.00m,
+                ImageUrl = "img/pollos/entero-pollo.jpg",
             },
-            new PizzaSpecial()
+            new PolloSpecial()
             {
-                Id = 3,
-                Name = "Clásica de pepperoni",
-                Description = "Es la pizza con la que creciste, ¡pero con un toque ardiente!",
-                BasePrice = 10.50m,
-                ImageUrl = "img/pizzas/pepperoni.jpg",
+                Name = "Medio pollo",
+                Description = "Crugientito y jugoso",
+                BasePrice = 500.00m,
+                ImageUrl = "img/pollos/medio-pollo.jpg",
             },
-            new PizzaSpecial()
+            new PolloSpecial()
             {
-                Id = 4,
-                Name = "Pollo Buffalo",
-                Description = "Pollo picante, salsa caliente y queso azul, garantizado para calentarte",
-                BasePrice = 12.75m,
-                ImageUrl = "img/pizzas/meaty.jpg",
-            },
-            new PizzaSpecial()
-            {
-                Id = 5,
-                Name = "Amantes de los Champiñones",
-                Description = "Tiene champiñones. ¿No es obvio?",
-                BasePrice = 11.00m,
-                ImageUrl = "img/pizzas/mushroom.jpg",
-            },
-            new PizzaSpecial()
-            {
-                Id = 7,
-                Name = "Delicia Vegetal",
-                Description = "Es como ensalada, pero en una pizza",
-                BasePrice = 11.50m,
-                ImageUrl = "img/pizzas/salad.jpg",
-            },
-            new PizzaSpecial()
-            {
-                Id = 8,
-                Name = "Margherita",
-                Description = "Pizza tradicional italiana con tomates y albahaca",
-                BasePrice = 9.99m,
-                ImageUrl = "img/pizzas/margherita.jpg",
-            },
-
-            new()
-            {
-               Id = 9,
-               Name = "Margherita Tamaño Familiar",
-               Description = "24\" de puro tomate y albahaca",
-               BasePrice = 14.99m,
-               ImageUrl = "img/pizzas/margherita.jpg",
-               FixedSize = 24
+                Name = "Octavo de pollo",
+                Description = "Un mata hamber. Crugientito y jugoso",
+                BasePrice = 125.00m,
+                ImageUrl = "img/pollos/octavo-pollo.jpg",
             }
         };
         db.Specials.AddRange(specials);

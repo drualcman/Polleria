@@ -1,28 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace BlazingPizza
+﻿namespace BlazingPolleria.Model
 {
     /// <summary>
     /// Represents a customized pizza as part of an order
     /// </summary>
-    public class Pizza
+    public class Pollo
     {
-        public const int DefaultSize = 12;
-        public const int MinimumSize = 9;
-        public const int MaximumSize = 17;
+        public const int DefaultSize = 500;
+        public const int MinimumSize = 125;
+        public const int MaximumSize = 1000;
 
         public int Id { get; set; }
 
         public int OrderId { get; set; }
 
-        public PizzaSpecial Special { get; set; }
+        public PolloSpecial Special { get; set; }
 
         public int SpecialId { get; set; }
 
         public int Size { get; set; }
 
-        public List<PizzaTopping> Toppings { get; set; }
+        public List<PolloTopping> Toppings { get; set; }
 
         public decimal GetBasePrice() =>
             Special is { FixedSize: not null }

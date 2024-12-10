@@ -1,7 +1,6 @@
 @page "/"
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
-@using BlazingPizza.Services
 @inject OrderState OrderState
 @inject IJSRuntime JavaScript
 @inject NavigationManager NavigationManager
@@ -74,19 +73,19 @@
 </div>
 
 @code {
-    List<PizzaSpecial> specials = new();
-    List<PizzaSpecial> orderedSpecials = new();
+    List<PolloSpecial> specials = new();
+    List<PolloSpecial> orderedSpecials = new();
     bool isAscending = true;
     string buttonText = "Ordenar de mayor a menor - viceverza";
     Order order => OrderState.Order;
 
     protected override async Task OnInitializedAsync()
     {
-        specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>(NavigationManager.BaseUri + "specials");
+        specials = await HttpClient.GetFromJsonAsync<List<PolloSpecial>>(NavigationManager.BaseUri + "specials");
         orderedSpecials = specials.OrderByDescending(special => special.BasePrice).ToList();
     }
 
-    async Task RemovePizzaConfirmation(Pizza removePizza)
+    async Task RemovePizzaConfirmation(Pollo removePizza)
     {
         var messageParams = new
         {
