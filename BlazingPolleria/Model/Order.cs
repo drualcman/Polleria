@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BlazingPizza
+namespace BlazingPolleria.Model
 {
     public class Order
     {
@@ -14,7 +14,7 @@ namespace BlazingPizza
 
         public Address DeliveryAddress { get; set; } = new Address();
 
-        public List<Pizza> Pizzas { get; set; } = new List<Pizza>();
+        public List<Pollo> Pizzas { get; set; } = new List<Pollo>();
 
         public decimal GetTotalPrice() => Pizzas.Sum(p => p.GetTotalPrice());
 

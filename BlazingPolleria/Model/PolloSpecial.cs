@@ -1,9 +1,9 @@
-﻿namespace BlazingPizza
+﻿namespace BlazingPolleria.Model
 {
     /// <summary>
     /// Represents a pre-configured template for a pizza a user can order
     /// </summary>
-    public class PizzaSpecial
+    public class PolloSpecial
     {
         public int Id { get; set; }
 

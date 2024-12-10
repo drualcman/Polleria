@@ -1,19 +1,21 @@
-﻿namespace BlazingPizza.Services;
+﻿using BlazingPolleria.Model;
+
+namespace BlazingPolleria.Services;
 
 public class OrderState
 {
     public bool ShowingConfigureDialog { get; private set; }
-    public Pizza ConfiguringPizza { get; private set; }
+    public Pollo ConfiguringPizza { get; private set; }
     public Order Order { get; private set; } = new Order();
 
-    public void ShowConfigurePizzaDialog(PizzaSpecial special)
+    public void ShowConfigurePizzaDialog(PolloSpecial special)
     {
-        ConfiguringPizza = new Pizza()
+        ConfiguringPizza = new Pollo()
         {
             Special = special,
             SpecialId = special.Id,
-            Size = Pizza.DefaultSize,
-            Toppings = new List<PizzaTopping>(),
+            Size = Pollo.DefaultSize,
+            Toppings = new List<PolloTopping>(),
         };
 
         ShowingConfigureDialog = true;
@@ -34,7 +36,7 @@ public class OrderState
         ShowingConfigureDialog = false;
     }
 
-    public void RemoveConfiguredPizza(Pizza pizza)
+    public void RemoveConfiguredPizza(Pollo pizza)
     {
         Order.Pizzas.Remove(pizza);
     }

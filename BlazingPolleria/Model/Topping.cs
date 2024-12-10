@@ -1,4 +1,4 @@
-﻿namespace BlazingPizza
+﻿namespace BlazingPolleria.Model
 {
     public class Topping
     {
