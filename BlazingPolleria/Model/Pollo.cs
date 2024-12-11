@@ -5,10 +5,6 @@
     /// </summary>
     public class Pollo
     {
-        public const int DefaultSize = 500;
-        public const int MinimumSize = 125;
-        public const int MaximumSize = 1000;
-
         public int Id { get; set; }
 
         public int OrderId { get; set; }
@@ -17,18 +13,16 @@
 
         public int SpecialId { get; set; }
 
-        public int Size { get; set; }
-
         public List<PolloTopping> Toppings { get; set; }
 
         public decimal GetBasePrice() =>
-            Special is { FixedSize: not null }
-              ? Special.BasePrice
-              : (decimal)Size / DefaultSize * Special?.BasePrice ?? 1;
+            Special?.BasePrice ?? 1;
 
         public decimal GetTotalPrice()
         {
-            return GetBasePrice();
+            decimal basePrice = GetBasePrice();
+            decimal toppings = Toppings.Sum(t => t.Topping.Price);
+            return basePrice + toppings;
         }
 
         public string GetFormattedTotalPrice()

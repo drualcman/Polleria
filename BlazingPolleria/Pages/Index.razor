@@ -6,8 +6,6 @@
 @inject NavigationManager NavigationManager
 
 <div class="main">
-    <h1>Pizzas Ardientes</h1>
-
     <!-- Botón personalizado -->
     <div class="filter-section">
         <button @onclick="ToggleOrderByPrice" class="custom-button">@buttonText</button>
@@ -32,26 +30,32 @@
 
 @if (OrderState.ShowingConfigureDialog)
 {
-    <ConfigurePizzaDialog Pizza="OrderState.ConfiguringPizza"
+    <ConfigurePizzaDialog Pollo="OrderState.ConfiguringPollo"
                           OnCancel="OrderState.CancelConfigurePizzaDialog"
-                          OnConfirm="OrderState.ConfirmConfigurePizzaDialog" />
+                          OnConfirm="OrderState.ConfirmConfigurePolloDialog" />
 }
 
 <div class="sidebar">
-    @if (order.Pizzas.Any())
+    @if (order.Pollos.Any())
     {
         <div class="order-contents">
             <h2>Su pedido</h2>
 
-            @foreach (var configuredPizza in order.Pizzas)
+            @foreach (var configuredPollo in order.Pollos)
             {
                 <div class="cart-item">
-                    <div class="title">@(configuredPizza.Size)" @configuredPizza.Special.Name</div>
+                    <div class="title">@configuredPollo.Special.Name</div>
+                    <ul>
+                    @foreach (var topping in configuredPollo.Toppings)
+                    {
+                        <li>+ @topping.Topping.Name</li>
+                    }
+                    </ul>
                     <div class="item-price">
-                        @configuredPizza.GetFormattedTotalPrice()
+                        S/.@configuredPollo.GetFormattedTotalPrice()
                     </div>
                     <button type="button" class="close text-danger" aria-label="Close"
-                            @onclick="@(async () => await RemovePizzaConfirmation(configuredPizza))">
+                            @onclick="@(async () => await RemovePolloConfirmation(configuredPollo))">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -60,13 +64,13 @@
     }
     else
     {
-        <div class="empty-cart">Elija una pizza<br>para comenzar</div>
+        <div class="empty-cart">Elija un pollo<br>para comenzar</div>
     }
 
-    <div class="order-total @(order.Pizzas.Any() ? "" : "hidden")">
+    <div class="order-total @(order.Pollos.Any() ? "" : "hidden")">
         Total:
         <span class="total-price">@order.GetFormattedTotalPrice()</span>
-        <a href="checkout" class="@(OrderState.Order.Pizzas.Count == 0 ? "btn btn-warning disabled" : "btn btn-warning")">
+        <a href="checkout" class="@(OrderState.Order.Pollos.Count == 0 ? "btn btn-warning disabled" : "btn btn-warning")">
             Hacer pedido >
         </a>
     </div>
@@ -85,24 +89,24 @@
         orderedSpecials = specials.OrderByDescending(special => special.BasePrice).ToList();
     }
 
-    async Task RemovePizzaConfirmation(Pollo removePizza)
+    async Task RemovePolloConfirmation(Pollo removePollo)
     {
         var messageParams = new
         {
-            title = "¿Eliminar Pizza?",
-            text = $"""¿Quieres eliminar la "{removePizza.Special!.Name}" de tu pedido?""",
+            title = "¿Eliminar Pollo?",
+            text = $"""¿Quieres eliminar la "{removePollo.Special!.Name}" de tu pedido?""",
             icon = "warning",
             buttons = new
             {
                 abort = new { text = "No, déjalo en mi pedido.", value = false },
-                confirm = new { text = "Si, quitar la pizza", value = true }
+                confirm = new { text = "Si, quitar el pollo", value = true }
             },
             dangerMode = true
         };
 
         if (await JavaScript.InvokeAsync<bool>("swal", messageParams))
         {
-            OrderState.RemoveConfiguredPizza(removePizza);
+            OrderState.RemoveConfiguredPollo(removePollo);
         }
     }
 

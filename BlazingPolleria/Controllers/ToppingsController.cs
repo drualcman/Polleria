@@ -5,20 +5,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlazingPolleria.Controllers;
 
-[Route("specials")]
+[Route("toppings")]
 [ApiController]
-public class SpecialsController : Controller
+public class ToppingsController : Controller
 {
     private readonly PolloStoreContext _db;
 
-    public SpecialsController(PolloStoreContext db)
+    public ToppingsController(PolloStoreContext db)
     {
         _db = db;
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<PolloSpecial>>> GetSpecials()
+    public async Task<ActionResult<List<Topping>>> GetToppings()
     {
-        return (await _db.Specials.ToListAsync()).OrderByDescending(s => s.BasePrice).ToList();
+        return (await _db.Toppings.ToListAsync()).OrderByDescending(s => s.Price).ToList();
     }
 }

@@ -1,28 +1,57 @@
 ﻿@inject HttpClient HttpClient
+@inject ServerUrlService ServerUrlService
 
 <div class="dialog-container">
     <div class="dialog">
         <div class="dialog-title">
-            <h2>@Pizza.Special.Name</h2>
-            @Pizza.Special.Description
+            <h2>@Pollo.Special.Name</h2>
+            @Pollo.Special.Description
         </div>
-        <form class="dialog-body">
+        <div class="dialog-body">
             <div>
-                @if (supportSizing)
+                @if (Pollo.Toppings is not null && Pollo.Toppings.Any())
                 {
-                    <label>Size:</label>
-                    <input type="range" min="@Pollo.MinimumSize" max="@Pollo.MaximumSize"
-                           step="1" @bind="Pizza.Size" @bind:event="oninput" />
+                    <ul>
+                        @foreach (var topping in Pollo.Toppings)
+                        {
+                            <li>
+                                + @topping.Topping.Name
+                                <button class="btn btn-danger" type="button" @onclick="() => Pollo.Toppings.Remove(topping)">-</button>
+                            </li>
+                        }
+                    </ul>
                 }
-                <span class="size-label">
-                    @(Pizza.Size)" (£@(Pizza.GetFormattedTotalPrice()))
-                </span>
             </div>
-        </form>
+
+            <div>
+                @if (Toppings is null)
+                {
+                    <p>Cargando extras...</p>
+                }
+                else
+                {
+                    <ul>
+                        @foreach (var topping in Toppings)
+                        {
+                            <li>
+                                @topping.Name por S/.@topping.GetFormattedPrice()
+                                <button class="btn btn-primary" type="button" @onclick="() => Pollo.Toppings.Add(new PolloTopping
+                                    {
+                                         Topping = topping,
+                                         PolloId = Pollo.Id
+                                    })">
+                                    +
+                                </button>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
         <div class="dialog-buttons">
             <button class="btn btn-secondary mr-auto" @onclick="OnCancel">Cancelar</button>
             <span class="mr-center">
-                Precio: <span class="price">@(Pizza.GetFormattedTotalPrice())</span>
+                Precio: <span class="price">S/.@(Pollo.GetFormattedTotalPrice())</span>
             </span>
             <button class="btn btn-success ml-auto" @onclick="OnConfirm">Ordenar ></button>
         </div>
@@ -31,18 +60,14 @@
 
 
 @code {
-    [Parameter] public Pollo Pizza { get; set; }
+    [Parameter] public Pollo Pollo { get; set; }
     [Parameter] public EventCallback OnCancel { get; set; }
     [Parameter] public EventCallback OnConfirm { get; set; }
 
-    bool supportSizing = true;
+    List<Topping> Toppings;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        if (Pizza is { Special.FixedSize: not null })
-        {
-            Pizza.Size = Pizza.Special.FixedSize.Value;
-            supportSizing = false;
-        }
+        Toppings = await HttpClient.GetFromJsonAsync<List<Topping>>($"{ServerUrlService.GetServerBaseAddress()}toppings");
     }
-}
+        }

@@ -39,6 +39,25 @@ public static class SeedData
             }
         };
         db.Specials.AddRange(specials);
+        var toppings = new Topping[]
+        {
+            new Topping
+            {
+                Name = "Coca Cola",
+                Price = 100.00m
+            },
+            new Topping
+            {
+                Name = "Fanta Naranja",
+                Price = 100.00m
+            },
+            new Topping
+            {
+                Name = "Agua",
+                Price = 50.00m
+            }
+        };
+        db.Toppings.AddRange(toppings);
         db.SaveChanges();
     }
 }
