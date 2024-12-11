@@ -15,7 +15,7 @@
                         @foreach (var topping in Pollo.Toppings)
                         {
                             <li>
-                                + @topping.Topping.Name
+                                + @topping.Topping.Name por S/.@topping.Topping.GetFormattedPrice()
                                 <button class="btn btn-danger" type="button" @onclick="() => Pollo.Toppings.Remove(topping)">-</button>
                             </li>
                         }
@@ -51,7 +51,7 @@
         <div class="dialog-buttons">
             <button class="btn btn-secondary mr-auto" @onclick="OnCancel">Cancelar</button>
             <span class="mr-center">
-                Precio: <span class="price">S/.@(Pollo.GetFormattedTotalPrice())</span>
+                Precio: <span class="price">@(Pollo.GetFormattedTotalPrice())</span>
             </span>
             <button class="btn btn-success ml-auto" @onclick="OnConfirm">Ordenar ></button>
         </div>

@@ -1,4 +1,12 @@
 ﻿<div class="form-field">
+    <label>Contacto:</label>
+    <div>
+        <InputText @bind-Value="Address.Celular" />
+        <ValidationMessage For="@(() => Address.Celular)" />
+    </div>
+</div>
+
+<div class="form-field">
     <label>Nombre:</label>
     <div>
         <InputText @bind-Value="Address.Name" />
