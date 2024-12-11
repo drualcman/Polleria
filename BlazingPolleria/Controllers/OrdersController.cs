@@ -20,8 +20,8 @@ public class OrdersController : Controller
     public async Task<ActionResult<List<OrderWithStatus>>> GetOrders()
     {
         var orders = await _db.Orders
-         .Include(o => o.Pizzas).ThenInclude(p => p.Special)
-         .Include(o => o.Pizzas).ThenInclude(p => p.Toppings).ThenInclude(t => t.Topping)
+         .Include(o => o.Pollos).ThenInclude(p => p.Special)
+         .Include(o => o.Pollos).ThenInclude(p => p.Toppings).ThenInclude(t => t.Topping)
          .OrderByDescending(o => o.CreatedTime)
          .ToListAsync();
 
@@ -36,7 +36,7 @@ public class OrdersController : Controller
         // Enforce existence of Pizza.SpecialId and Topping.ToppingId
         // in the database - prevent the submitter from making up
         // new specials and toppings
-        foreach (var pizza in order.Pizzas)
+        foreach (var pizza in order.Pollos)
         {
             pizza.SpecialId = pizza.Special.Id;
             pizza.Special = null;
@@ -53,8 +53,8 @@ public class OrdersController : Controller
     {
         var order = await _db.Orders
             .Where(o => o.OrderId == orderId)
-            .Include(o => o.Pizzas).ThenInclude(p => p.Special)
-            .Include(o => o.Pizzas).ThenInclude(p => p.Toppings).ThenInclude(t => t.Topping)
+            .Include(o => o.Pollos).ThenInclude(p => p.Special)
+            .Include(o => o.Pollos).ThenInclude(p => p.Toppings).ThenInclude(t => t.Topping)
             .SingleOrDefaultAsync();
 
         if (order == null)

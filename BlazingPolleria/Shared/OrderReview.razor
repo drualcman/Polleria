@@ -1,8 +1,7 @@
-﻿@foreach (var pizza in Order.Pizzas)
+﻿@foreach (var pizza in Order.Pollos)
 {
     <p>
         <strong>
-            @(pizza.Size)"
             @pizza.Special.Name
             (S/.@pizza.GetFormattedTotalPrice())
         </strong>

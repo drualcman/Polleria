@@ -1,5 +1,7 @@
 ﻿@import url('font/quicksand.css');
-
+:root {
+    --main-color: #ec1d25;
+}
 body, html {
     height: 100%;
 }
@@ -21,12 +23,10 @@ form {
 
 .top-bar {
     height: 5rem;
-    background-color: rgb(192,0,0);
-    background-image: linear-gradient(rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.25) 25%, rgba(0,0,0,0) 70%);
+    background-color: var(--main-color);
     display: flex;
     align-items: stretch;
     color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
     padding: 0 3rem;
     position: fixed;
     top: 0;
@@ -141,14 +141,17 @@ form {
 
 .pizza-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 20rem);
+    grid-template-columns: repeat(auto-fill, 40rem);
     grid-gap: 2rem;
     justify-content: center;
     padding-left: 0;
+    max-height: 70vh; /* Ajusta este valor según el espacio que quieras permitir */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+    padding-right: 5px; /* Espacio para evitar que el contenido se solape con el scroll */
 }
 
     .pizza-cards > li {
-        height: 10rem;
+        height: 20rem;
         position: relative;
         background-size: cover;
         border-radius: 0.5rem;
@@ -229,7 +232,7 @@ form {
     }
 
 .order-total {
-    background-color: rgb(191, 52, 52);
+    background-color: var(--main-color);
     height: 4rem;
     flex-shrink: 0;
     display: flex;
@@ -763,7 +766,6 @@ input[type=range] {
 
 .btn {
     padding: 10px 15px;
-    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;

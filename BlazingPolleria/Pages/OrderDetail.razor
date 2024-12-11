@@ -41,11 +41,10 @@
                             <span class="sr-only">Comprobando el estado de su pedido...</span>
                         </div>
                     }
-                    @foreach (var pizza in orderWithStatus.Order.Pizzas)
+                    @foreach (var pizza in orderWithStatus.Order.Pollos)
                     {
                         <p>
                             <strong>
-                                @(pizza.Size)"
                                 @pizza.Special.Name
                                 (S/.@pizza.GetFormattedTotalPrice())
                             </strong>

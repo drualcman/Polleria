@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace BlazingPolleria.Model
+﻿namespace BlazingPolleria.Model
 {
     public class Order
     {
@@ -14,9 +10,9 @@ namespace BlazingPolleria.Model
 
         public Address DeliveryAddress { get; set; } = new Address();
 
-        public List<Pollo> Pizzas { get; set; } = new List<Pollo>();
+        public List<Pollo> Pollos { get; set; } = new List<Pollo>();
 
-        public decimal GetTotalPrice() => Pizzas.Sum(p => p.GetTotalPrice());
+        public decimal GetTotalPrice() => Pollos.Sum(p => p.GetTotalPrice());
 
         public string GetFormattedTotalPrice() => GetTotalPrice().ToString("0.00");
     }

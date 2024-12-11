@@ -8,7 +8,9 @@ builder.Services.AddScoped<OrderState>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
+builder.Services.AddSingleton<ServerUrlService>();
 builder.Services.AddSqlite<PolloStoreContext>("Data Source=pollo.db");
 
 var app = builder.Build();
