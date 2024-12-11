@@ -23,6 +23,9 @@ namespace BlazingPolleria.Model
 
         [Required(ErrorMessage = "Este campo no puede estar vacío"), RegularExpression(@"^([0-9]{5})$", ErrorMessage = "Por favor, usa un código postal válido con cinco números.")]
         public string PostalCode { get; set; }
+
+        [Required(ErrorMessage = "Este campo no puede estar vacío"), Length(9, 9, ErrorMessage = "El celular debe de ser de 9 cifras.")]
+        public string Celular { get; set; }
     }
 
 }

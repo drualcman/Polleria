@@ -1,10 +1,24 @@
-﻿@foreach (var pizza in Order.Pollos)
+﻿@foreach (var pollo in Order.Pollos)
 {
     <p>
         <strong>
-            @pizza.Special.Name
-            (S/.@pizza.GetFormattedTotalPrice())
+            @pollo.Special.Name
+            (S/.@pollo.GetBasePrice())
         </strong>
+    </p>
+    @if (pollo.Toppings is not null && pollo.Toppings.Any())
+    {
+        <ul>
+            @foreach (var topping in pollo.Toppings)
+            {
+                <li>
+                    + @topping.Topping.Name por S/.@topping.Topping.GetFormattedPrice()
+                </li>
+            }
+        </ul>
+    }
+    <p>
+        Total pollo <span class="price">@pollo.GetFormattedTotalPrice()</span>
     </p>
 }
 
